@@ -1,76 +1,78 @@
-import tkinter as tk
+import tkinter as tk, tkinter.messagebox
 import requests
-from tkinter import messagebox
 from datetime import date
 import calendar
 
 
-# General Setup
-root = tk.Tk()
-root.title('Weather App')
-root.iconbitmap('icon.ico')
-root.geometry('600x500')
+class MainApplication(tk.Frame):
+    def __init__(self, master, *args, **kwargs):
+        tk.Frame.__init__(self, master, *args, **kwargs)
+        self.master = master
+        master.title('Weather App')
+        master.iconbitmap('icon.ico')
+        master.geometry('600x500')
 
-# Binding Enter Key to work as 'Generate' button
-def callback(event):
-    get_weather(textbox.get())
+        master.bind('<Return>', self.callback)
 
-root.bind('<Return>', callback)
+        # Background
+        self.bg_image = tk.PhotoImage(file='landscape.png')
+        self.bg_label = tk.Label(master, image=self.bg_image).place(relwidth=1, relheight=1)
 
-def get_help():
-    message_text = '''
-    To search your city weather type your city 
-    into textbox and click 'Generate'. 
-    To be more specific you can add name of your 
-    city and country code after comma.
-    For example: Paris, FR
-    '''
-    my_message = tk.messagebox.showinfo('Info', message_text)
+        # Frames
+        self.frame = tk.Frame(master, bg='#A5DDE0', bd=5)
+        self.frame.place(relx = 0.5, rely=0.21,relwidth=0.75, relheight=0.1, anchor='n')
 
-# Assigning informations
-def format_response(weather):
-    try:
-        name = weather['name']
-        desc = weather['weather'][0]['description']
-        temp = weather['main']['temp']
-        final_str = f'City name: {name}\nConditions: {desc}\nTemperature: {temp} °C'
-    except:
-        final_str = 'Invalid city name'
-    return final_str
+        self.lower_frame = tk.Frame(master, bg='#A5DDE0', bd=7)
+        self.lower_frame.place(relx=0.5, rely=0.35, relwidth=0.75, relheight=0.6, anchor='n')
 
-# Getting and displaying informations
-def get_weather(city):
-    weather_key= '3c580ccd1e780ff38aaccb4144227e3f'
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={weather_key}&units=metric'
-    response = requests.get(url)
-    weather = response.json()
+        # Entries
+        self.textbox = tk.Entry(self.frame, font=('Garamond', 15), borderwidth=2, relief=tk.FLAT)
+        self.textbox.place(relwidth=0.65, relheight=1)
 
-    label_display['text'] = f'{format_response(weather)}\n\n{calendar.day_name[date.today().weekday()] }'
+        # Buttons
+        self.btn_submit = tk.Button(self.frame, text='Generate', font=('Garamond', 15), command=lambda: self.get_weather(self.textbox.get()))
+        self.btn_submit.place(relx=0.7, relwidth=0.3, relheight=1)
 
-# Background
-bg_image = tk.PhotoImage(file='landscape.png')
-bg_label = tk.Label(root, image=bg_image).place(relwidth=1, relheight=1)
+        btn_help = tk.Button(master, text='Help', font=('Garamond', 12), command=self.get_help)
+        btn_help.place(relx=0.98, rely=0.02, relwidth=0.12, relheight=0.05, anchor="ne")
 
-# Frames
-frame = tk.Frame(root, bg='#A5DDE0', bd=5)
-frame.place(relx = 0.5, rely=0.21,relwidth=0.75, relheight=0.1, anchor='n')
+        # Labels
+        self.label_display = tk.Label(self.lower_frame, bg='white', font=('Garamond', 15))
+        self.label_display.place(relwidth=1, relheight=1)
 
-lower_frame = tk.Frame(root, bg='#A5DDE0', bd=7)
-lower_frame.place(relx=0.5, rely=0.35, relwidth=0.75, relheight=0.6, anchor='n')
+    def get_help(self):
+        self.message_text = '''
+        To search your city weather type your city
+        into textbox and click 'Generate'.
+        To be more specific you can add name of your
+        city and country code after comma.
+        For example: Paris, FR
+        '''
+        self.my_message = tkinter.messagebox.showinfo('Info', self.message_text)
 
-# Entries
-textbox = tk.Entry(frame, font=('Garamond', 15), borderwidth=2, relief=tk.FLAT)
-textbox.place(relwidth=0.65, relheight=1)
+    def format_response(self, weather):
+        try:
+            self.name = weather['name']
+            self.desc = weather['weather'][0]['description']
+            self.temp = weather['main']['temp']
+            self.day = calendar.day_name[date.today().weekday()]
+            self.final_str = f'City name: {self.name}\nConditions: {self.desc}\nTemperature: {self.temp} °C\n\n{self.day}'
+        except:
+            self.final_str = 'Invalid city name'
+        return self.final_str
 
-# Buttons
-btn_submit = tk.Button(frame, text='Generate', font=('Garamond', 15), command=lambda: get_weather(textbox.get()))
-btn_submit.place(relx=0.7, relwidth=0.3, relheight=1)
+    def get_weather(self, city):
+        self.weather_key = '3c580ccd1e780ff38aaccb4144227e3f'
+        self.url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={self.weather_key}&units=metric'
+        self.response = requests.get(self.url)
+        self.weather = self.response.json()
+        self.label_display['text'] = f'{self.format_response(self.weather)}'
 
-btn_help = tk.Button(root, text='Help', font=('Garamond', 12), command=get_help)
-btn_help.place(relx=0.98, rely=0.02, relwidth=0.12, relheight=0.05, anchor="ne")
+    def callback(self, event):
+        self.get_weather(self.textbox.get())
 
-# Labels
-label_display = tk.Label(lower_frame, bg='white', font=('Garamond', 15))
-label_display.place(relwidth=1, relheight=1)
 
-root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    MainApplication(root).pack(side="top", fill="both", expand=True)
+    root.mainloop()
