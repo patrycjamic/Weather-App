@@ -14,7 +14,7 @@ so you need to go to website, log in and copy your own API key.
 
 ## Screenshoots  
 Correctly written city<br/><br/>
-![image1](https://user-images.githubusercontent.com/40001103/86344574-b819d280-bc5a-11ea-9991-e3bca6d67f72.PNG<br/><br/>
+![image1](https://user-images.githubusercontent.com/40001103/86345402-c7e5e680-bc5b-11ea-853a-c50448108bc7.PNG)<br/><br/>
 
 Incorrectly written city<br/><br/>
 ![image2](https://user-images.githubusercontent.com/40001103/86344577-b8b26900-bc5a-11ea-9ca3-1b0710204838.PNG)<br/><br/>
