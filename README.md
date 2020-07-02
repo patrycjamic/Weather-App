@@ -24,7 +24,7 @@ After pressing the button<br/><br/>
 ![image3](https://user-images.githubusercontent.com/40001103/86344583-b9e39600-bc5a-11ea-85b7-ac26ec3cbe8d.PNG)<br/><br/>
 
 ## Technologies
-Python 3.8
+Python 3.8</br>
 Modules: requests, calendar, datetime
 
 ## Status
