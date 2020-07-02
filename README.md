@@ -9,7 +9,7 @@ If you type your city name wrong instead of weather information there'll be text
 'Invalid city name'. 
 In weather app there is also a button called 'help' which explains how app works.
 
-Note: Keep in mind that API key that I copy from https://openweathermap.org/ is unique
+Note: Keep in mind that API key that I used from https://openweathermap.org/ is unique
 so you need to go to website, log in and copy your own API key.
 
 ## Screenshoots
