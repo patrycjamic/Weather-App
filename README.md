@@ -13,6 +13,9 @@ Note: Keep in mind that API key that I used from https://openweathermap.org/ is 
 so you need to go to website, log in and copy your own API key.
 
 ## Screenshoots
+![image1](https://user-images.githubusercontent.com/40001103/86344574-b819d280-bc5a-11ea-9991-e3bca6d67f72.PNG)  
+![image2](https://user-images.githubusercontent.com/40001103/86344577-b8b26900-bc5a-11ea-9ca3-1b0710204838.PNG)  
+![image3](https://user-images.githubusercontent.com/40001103/86344583-b9e39600-bc5a-11ea-85b7-ac26ec3cbe8d.PNG)  
 
 ## Technologies
 Python 3.8
